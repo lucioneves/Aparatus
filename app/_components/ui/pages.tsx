@@ -1,0 +1,29 @@
+export const PageContainer = ({ children }: {children: React.ReactNode }) => {
+    return <div className="space-y-6 p-5">{children}</div>
+}
+
+export const PageSessiontitle = ({children, }: {
+    children: React.ReactNode;
+}) => {
+    return (
+        <h2 className="text-xs text-foreground font-semibold uppercase">
+            {children}
+        </h2>
+    )
+}
+
+export const PageSession = ({children }: {children: React.ReactNode }) => {
+    return (
+        <div className="space-y-3">{children}</div>
+    )
+}
+
+export const PageSessionScroller = ({children, }: {
+    children: React.ReactNode;
+}) => {
+    return (
+        <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            {children}
+        </div>       
+    )
+}

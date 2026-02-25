@@ -5,6 +5,8 @@ import Image from "next/image";
 import BookingItem from "./_components/booking-item";
 import { prisma } from "@/lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
+import Footer from "./_components/footer";
+import { PageContainer, PageSession, PageSessionScroller, PageSessiontitle } from "./_components/ui/pages";
 
 const Home = async () => {
   const recommendedBarbershops = await prisma.barbershop.findMany({
@@ -21,7 +23,7 @@ const Home = async () => {
   return(
     <main>
       <Header/>      
-      <div className="p-5 space-y-4">
+      <PageContainer>
         <SearchInput />
         <Image 
           src={banner}
@@ -29,32 +31,33 @@ const Home = async () => {
           sizes="100vw" 
           className="h-auto w-full" 
         />
-        <h2 className="text-xs text-foreground font-semibold uppercase">
-          Agendamentos
-        </h2>
-        <BookingItem
-         serviceName={"Corte de cabelo"}
-         barbershopName={"Whisky Barbearia"} 
-         barbershopImageUrl={"https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png"} 
-         date={new Date()} 
-        />
-        <h2 className="text-xs text-foreground font-semibold uppercase">
-          recomendados
-        </h2>
-        <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {recommendedBarbershops.map((barbershop) => (
-          <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-        ))}
-        </div>
-        <h2 className="text-xs text-foreground font-semibold uppercase">
-          recomendados
-        </h2>
-        <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {popularBarbershops.map((barbershop) => (
-          <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-        ))}
-        </div>
-      </div>
+        <PageSession>
+          <PageSessiontitle>Agendamentos</PageSessiontitle>
+          <BookingItem
+            serviceName={"Corte de cabelo"}
+            barbershopName={"Whisky Barbearia"} 
+            barbershopImageUrl={"https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png"} 
+            date={new Date()} 
+          />
+        </PageSession>
+        <PageSession>
+          <PageSessiontitle>recomendados</PageSessiontitle>
+          <PageSessionScroller>
+            {recommendedBarbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+          </PageSessionScroller>
+        </PageSession>  
+        <PageSession>
+          <PageSessiontitle>populares</PageSessiontitle>
+          <PageSessionScroller>
+            {popularBarbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+          </PageSessionScroller>
+        </PageSession>
+      </PageContainer>
+      <Footer />
     </main>
   )
 }
